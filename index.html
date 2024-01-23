@@ -63,7 +63,6 @@
 
         function playSound() {
             const audioElement = document.getElementById('audio-element');
-            // Play the audio
             audioElement.play();
         }
 
@@ -90,16 +89,14 @@
         }
 
         function addSeconds(amount) {
-            if (!timerRunning) {
+            if (timerRunning) {
                 seconds += amount;
-                updateTimerLabel();
             }
         }
 
         function resetTimer() {
-            if (!timerRunning) {
+            if (timerRunning) {
                 seconds = 150;
-                updateTimerLabel();
             }
         }
     </script>
