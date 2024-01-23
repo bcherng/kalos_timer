@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boss Timer</title>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+        }
+
+        #timer-label {
+            font-size: 32px;
+        }
+
+        .button {
+            width: 150px;
+            height: 40px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        #add-50-button {
+            background-color: #ffedbd;
+        }
+
+        #add-10-button {
+            background-color: #9db9e3;
+        }
+
+        #reset-button {
+            background-color: #b5f2a7;
+        }
+
+        #start-button {
+            background-color: #ffb9b1;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Boss Timer</h1>
+    <div id="timer-label">150</div>
+
+    <audio id="audio-element" src="beep.wav"></audio>
+    <button id="add-50-button" class="button" onclick="addSeconds(50)">Add 50s</button>
+    <button id="add-10-button" class="button" onclick="addSeconds(10)">Add 10s</button>
+    <button id="reset-button" class="button" onclick="resetTimer()">Reset</button>
+    <button id="start-button" class="button" onclick="startTimer()">Start</button>
+
+    <script>
+        let seconds = 150;
+        let timerRunning = false;
+        let countdownInterval;
+
+        function updateTimerLabel() {
+            document.getElementById("timer-label").innerText = seconds;
+        }
+
+        function playSound() {
+            const audioElement = document.getElementById('audio-element');
+            // Play the audio
+            audioElement.play();
+        }
+
+        function startTimer() {
+            if (!timerRunning) {
+                timerRunning = true;
+                document.getElementById("start-button").disabled = true;
+                countdownInterval = setInterval(function () {
+                    updateTimerLabel();
+                    seconds -= 1;
+
+                    if (seconds < 10) {
+                        document.getElementById("timer-label").style.color = "red";
+                        playSound();
+                    } else {
+                        document.getElementById("timer-label").style.color = "black";
+                    }
+
+                    if (seconds < 0) {
+                        seconds = 150;
+                    }
+                }, 1000);
+            }
+        }
+
+        function addSeconds(amount) {
+            if (!timerRunning) {
+                seconds += amount;
+                updateTimerLabel();
+            }
+        }
+
+        function resetTimer() {
+            if (!timerRunning) {
+                seconds = 150;
+                updateTimerLabel();
+            }
+        }
+    </script>
+</body>
+</html>
